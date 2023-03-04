@@ -8,6 +8,10 @@ terraform {
             source  = "hashicorp/azurerm"
             version = "~>3.44"
         }
+        azapi = {
+          source = "azure/azapi"
+          version = "~>1.3"
+        }
     }
 }
 
@@ -20,5 +24,5 @@ provider "azurerm" {
 }
 
 provider "github" {
-    token = "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"
+    token = "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"
 }
