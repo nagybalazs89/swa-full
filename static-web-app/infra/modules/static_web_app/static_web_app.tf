@@ -19,6 +19,7 @@ resource "github_actions_secret" "az_api_key" {
 
 resource "time_sleep" "wait_n_seconds" {
   create_duration       = "${var.workflow_action_time}s"
+  depends_on            = [ azurerm_static_site.this ]
 }
 
 data "azapi_resource" "environment_branch" {
@@ -37,6 +38,26 @@ resource "azapi_resource" "environment_be" {
   body = jsonencode({
     properties = {
       backendResourceId = each.value
+      region = data.azurerm_resource_group.this.location
+    }
+    kind = "string"
+  })
+}
+
+data "azapi_resource" "default_branch" {
+  type                  = "Microsoft.Web/staticSites/builds@2022-03-01"
+  parent_id             = azurerm_static_site.this.id
+  name                  = "default"
+  depends_on            = [ time_sleep.wait_n_seconds ]
+}
+
+resource "azapi_resource" "environment_default" {
+  type = "Microsoft.Web/staticSites/builds/linkedBackends@2022-03-01"
+  name = "${var.default_branch}-be"
+  parent_id = data.azapi_resource.default_branch.id
+  body = jsonencode({
+    properties = {
+      backendResourceId = var.default_branch_linked_backend_resource_id
       region = data.azurerm_resource_group.this.location
     }
     kind = "string"

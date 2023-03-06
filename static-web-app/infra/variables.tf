@@ -40,6 +40,12 @@ variable "default_branch" {
     type                = string
 }
 
+variable "default_branch_linked_backend_resource_id" {
+    description         = "Resource Id of the linked backend which is connected to the production environment"
+    default             = ""
+    type                = string
+}
+
 variable "workflow_file_path" {
     description         = "Path to the workflow file"
     default             = ""
@@ -81,5 +87,5 @@ variable "static_web_app_tier" {
 variable "workflow_action_time" {
     description     = "Wait time (seconds) for the GitHub build action to run before linked backends are registered"
     type            = number
-    default         = 300
+    default         = 240
 }

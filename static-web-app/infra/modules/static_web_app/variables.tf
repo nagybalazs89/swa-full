@@ -40,6 +40,12 @@ variable "default_branch" {
     type                = string
 }
 
+variable "default_branch_linked_backend_resource_id" {
+    description         = "Resource Id of the linked backend which is connected to the production environment"
+    default             = ""
+    type                = string
+}
+
 variable "workflow_file_path" {
     description         = "Path to the workflow file"
     default             = ""

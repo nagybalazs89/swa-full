@@ -24,5 +24,5 @@ provider "azurerm" {
 }
 
 provider "github" {
-    token = "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"
+    token = "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"
 }
